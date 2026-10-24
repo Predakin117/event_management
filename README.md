@@ -39,3 +39,4 @@ python manage.py runserver
 python manage.py test
 ```
 # event_management
+# event_management

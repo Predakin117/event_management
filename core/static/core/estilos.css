@@ -100,3 +100,31 @@ form.busqueda input {
     padding: 1rem;
     border-top: 1px solid var(--color-borde);
 }
+
+/* Formularios y sesión */
+form.salir { display: inline; margin-left: 1.25rem; }
+form.salir button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .6);
+    padding: .3rem .8rem;
+    font-size: .9rem;
+}
+form.salir button:hover { background: rgba(255, 255, 255, .15); }
+
+.formulario p { margin: 0 0 1rem; display: flex; flex-direction: column; gap: .3rem; }
+.formulario label { font-weight: 600; }
+.formulario input[type=text],
+.formulario input[type=password],
+.formulario input[type=datetime-local],
+.formulario select,
+.formulario textarea {
+    padding: .6rem .8rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+.formulario .helptext { color: #6b7280; font-size: .85rem; }
+.formulario ul.errorlist { margin: 0; padding-left: 1.2rem; color: #b91c1c; font-size: .95rem; }
+.acciones { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+.boton.secundario { background: #6b7280; }

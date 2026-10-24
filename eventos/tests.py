@@ -32,3 +32,36 @@ class EventosViewsTests(TestCase):
     def test_detalle_inexistente_da_404(self):
         r = self.client.get(reverse('eventos:detalle', args=[9999]))
         self.assertEqual(r.status_code, 404)
+
+
+class CrearEventoTests(TestCase):
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+        self.usuario = get_user_model().objects.create_user('ana', password='clave-segura-123')
+        self.url = reverse('eventos:crear')
+        self.datos = {
+            'nombre': 'Hackathon',
+            'descripcion': 'Maratón de código',
+            'fecha': '2026-12-01T09:30',
+            'lugar': 'Bloque 5',
+        }
+
+    def test_sin_sesion_redirige_al_login(self):
+        r = self.client.get(self.url)
+        self.assertRedirects(r, f"{reverse('login')}?next={self.url}")
+
+    def test_con_sesion_crea_evento(self):
+        self.client.login(username='ana', password='clave-segura-123')
+        r = self.client.post(self.url, self.datos)
+        evento = Evento.objects.get(nombre='Hackathon')
+        self.assertRedirects(r, reverse('eventos:detalle', args=[evento.pk]))
+
+    def test_login_desde_el_sitio(self):
+        r = self.client.post(reverse('login'), {'username': 'ana', 'password': 'clave-segura-123'})
+        self.assertRedirects(r, reverse('eventos:lista'))
+
+    def test_detalle_oculta_invitados_a_anonimos(self):
+        evento = Evento.objects.create(nombre='X', fecha=timezone.now(), lugar='Y')
+        self.assertNotContains(self.client.get(reverse('eventos:detalle', args=[evento.pk])), 'Agregar invitado')
+        self.client.login(username='ana', password='clave-segura-123')
+        self.assertContains(self.client.get(reverse('eventos:detalle', args=[evento.pk])), 'Agregar invitado')

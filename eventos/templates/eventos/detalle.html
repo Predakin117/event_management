@@ -13,5 +13,17 @@
         {% endif %}
     </article>
 
-    <a class="boton" href="{% url 'eventos:lista' %}">← Volver a los eventos</a>
+    {% if user.is_authenticated %}
+        <article class="tarjeta">
+            <h2>Invitados ({{ invitados|length }})</h2>
+            {% for invitado in invitados %}
+                <p class="meta">{{ invitado.nombre }} · C.C. {{ invitado.cedula }}</p>
+            {% empty %}
+                <p class="vacio">Aún no hay invitados para este evento.</p>
+            {% endfor %}
+            <p><a class="boton" href="{% url 'invitados:crear' %}?evento={{ evento.pk }}">+ Agregar invitado</a></p>
+        </article>
+    {% endif %}
+
+    <a class="boton secundario" href="{% url 'eventos:lista' %}">← Volver a los eventos</a>
 {% endblock %}

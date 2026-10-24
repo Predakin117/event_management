@@ -131,3 +131,8 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# Autenticación (login propio del sitio, sin pasar por /admin/)
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'eventos:lista'
+LOGOUT_REDIRECT_URL = 'eventos:lista'

@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}Eventos · Gestión de Eventos{% endblock %}
+
+{% block contenido %}
+    <h1>Próximos eventos</h1>
+
+    {% for evento in eventos %}
+        <article class="tarjeta">
+            <h2><a href="{% url 'eventos:detalle' evento.pk %}">{{ evento.nombre }}</a></h2>
+            <p class="meta">📅 {{ evento.fecha|date:"l j \d\e F \d\e Y, g:i A" }}</p>
+            <p class="meta">📍 {{ evento.lugar }}</p>
+        </article>
+    {% empty %}
+        <p class="vacio">Todavía no hay eventos registrados.</p>
+    {% endfor %}
+{% endblock %}

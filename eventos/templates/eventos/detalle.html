@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}{{ evento.nombre }} · Gestión de Eventos{% endblock %}
+
+{% block contenido %}
+    <h1>{{ evento.nombre }}</h1>
+
+    <article class="tarjeta">
+        <p class="meta">📅 {{ evento.fecha|date:"l j \d\e F \d\e Y, g:i A" }}</p>
+        <p class="meta">📍 {{ evento.lugar }}</p>
+        {% if evento.descripcion %}
+            <p>{{ evento.descripcion|linebreaksbr }}</p>
+        {% endif %}
+    </article>
+
+    <a class="boton" href="{% url 'eventos:lista' %}">← Volver a los eventos</a>
+{% endblock %}

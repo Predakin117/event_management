@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block titulo %}Confirmar invitación · Gestión de Eventos{% endblock %}
+
+{% block contenido %}
+    <h1>Confirma tu invitación</h1>
+    <p>Escribe tu número de cédula para ver a qué eventos estás invitado.</p>
+
+    <form class="busqueda" method="get" action="{% url 'confirmacion:confirmar' %}">
+        {{ formulario.cedula }}
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if formulario.cedula.errors %}
+        <div class="errores">{{ formulario.cedula.errors }}</div>
+    {% endif %}
+
+    {% if buscado %}
+        {% if invitaciones %}
+            <div class="aviso ok">
+                ¡Hola, <strong>{{ nombre }}</strong>! Estás invitado a los siguientes eventos:
+            </div>
+
+            {% for invitacion in invitaciones %}
+                {% with evento=invitacion.evento %}
+                    <article class="tarjeta">
+                        <h2><a href="{% url 'eventos:detalle' evento.pk %}">{{ evento.nombre }}</a></h2>
+                        <p class="meta">📅 {{ evento.fecha|date:"l j \d\e F \d\e Y, g:i A" }}</p>
+                        <p class="meta">📍 {{ evento.lugar }}</p>
+                    </article>
+                {% endwith %}
+            {% endfor %}
+        {% else %}
+            <div class="aviso error">
+                No encontramos ninguna invitación con esa cédula. Verifica el número e inténtalo de nuevo.
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}Gestión de Eventos{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/estilos.css' %}">
+</head>
+<body>
+    <header class="cabecera">
+        <a class="marca" href="{% url 'eventos:lista' %}">Gestión de Eventos</a>
+        <nav>
+            <a href="{% url 'eventos:lista' %}">Eventos</a>
+            <a href="{% url 'confirmacion:confirmar' %}">Confirmar invitación</a>
+        </nav>
+    </header>
+
+    <main class="contenedor">
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <footer class="pie">
+        <p>Proyecto Django + SQLite · sin JavaScript ni librerías externas</p>
+    </footer>
+</body>
+</html>
